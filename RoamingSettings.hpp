@@ -9,9 +9,9 @@
 namespace WotReplayParser {
 
 /**
- * Actual meaning of values is unkown.
- * Variable names are pure guesses.
- */
+* Actual meaning of values is unkown.
+* Variable names are pure guesses.
+*/
 class RoamingSettings {
 public:
     struct ServerInfo {
@@ -22,6 +22,7 @@ public:
     };
 
     RoamingSettings() = default;
+
     ~RoamingSettings() = default;
 
     void parse(Json::Value root);

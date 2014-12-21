@@ -14,10 +14,13 @@ public:
     struct FragInfo {
         uint32_t frags;
     };
+
     MatchData() = default;
+
     ~MatchData() = default;
 
     void parse(std::vector<uint8_t> data);
+
     void parse(std::string json);
 
 private:

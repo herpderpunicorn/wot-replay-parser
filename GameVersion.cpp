@@ -1,4 +1,3 @@
-
 #include "GameVersion.hpp"
 
 #include <json/json.h>

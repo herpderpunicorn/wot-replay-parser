@@ -23,19 +23,21 @@ public:
     };
 
     Packet() = delete;
+
     Packet(std::vector<uint8_t>::iterator beginning);
+
     ~Packet() = default;
 
     /**
-     * Returns the size of the packet in the event stream.
-     */
+    * Returns the size of the packet in the event stream.
+    */
     const size_t size() const;
 
     const PacketType getType() const;
 
     /**
-     * Exports the Packet to a json object.
-     */
+    * Exports the Packet to a json object.
+    */
     Json::Value toJson();
 
 private:

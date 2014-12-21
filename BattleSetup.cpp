@@ -1,4 +1,3 @@
-
 #include "BattleSetup.hpp"
 
 #include <json/json.h>

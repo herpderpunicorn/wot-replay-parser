@@ -13,9 +13,11 @@ namespace WotReplayParser {
 class MatchStart {
 public:
     MatchStart() = default;
+
     ~MatchStart() = default;
 
     bool parse(std::vector<uint8_t> data);
+
     bool parse(std::string json);
 
     int getVersion();

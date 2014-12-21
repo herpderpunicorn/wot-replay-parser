@@ -10,8 +10,9 @@ namespace WotReplayParser {
 class Vehicle {
 public:
     Vehicle() = default;
+
     ~Vehicle() = default;
-    
+
     void parse(Json::Value root);
 
 private:

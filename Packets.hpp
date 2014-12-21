@@ -1,7 +1,6 @@
-
 /**
- * Includes all Payload classes
- */
+* Includes all Payload classes
+*/
 
 #include "BattleSetup.hpp"
 #include "GameState.hpp"

@@ -2,7 +2,7 @@
 
 namespace WotReplayParser {
 
-template <typename T>
+template<typename T>
 inline T swapEndian(T u) {
     union {
         T u;

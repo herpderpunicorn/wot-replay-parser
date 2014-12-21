@@ -22,6 +22,7 @@ public:
     };
 
     GameState() = default;
+
     ~GameState() = default;
 
     virtual Json::Value toJson() override;

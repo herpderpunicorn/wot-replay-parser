@@ -26,10 +26,10 @@ public:
     struct QuestProgress {
         // Unkown format
         /** Something like this
-         * "questsProgress": {"EU_05-08_Jul_2014_q4": [null, {"bonusCount": 11}, {"bonusCount": 12}]}
-         * or
-         * "questsProgress": {"EU_08-12_Jul_2014_q1": [null, {"bonusCount": 2, "damageDealt": 3684}, {"bonusCount": 3, "damageDealt": 406}], "EU_01-01_Aug_2014_q2": [null, {"bonusCount": 0, "vehicleKills": 23}, {"bonusCount": 0, "vehicleKills": 24}]}
-         */
+        * "questsProgress": {"EU_05-08_Jul_2014_q4": [null, {"bonusCount": 11}, {"bonusCount": 12}]}
+        * or
+        * "questsProgress": {"EU_08-12_Jul_2014_q1": [null, {"bonusCount": 2, "damageDealt": 3684}, {"bonusCount": 3, "damageDealt": 406}], "EU_01-01_Aug_2014_q2": [null, {"bonusCount": 0, "vehicleKills": 23}, {"bonusCount": 0, "vehicleKills": 24}]}
+        */
     };
     struct Detail {
         uint32_t spotted;
@@ -45,6 +45,7 @@ public:
     };
 
     Personal() = default;
+
     ~Personal() = default;
 
     void parse(Json::Value root);

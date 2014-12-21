@@ -1,4 +1,3 @@
-
 #include "GameState.hpp"
 
 #include <json/json.h>

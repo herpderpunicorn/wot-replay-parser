@@ -8,6 +8,7 @@ namespace Payload {
 class GameVersion : public Payload {
 public:
     GameVersion() = default;
+
     ~GameVersion() = default;
 
     virtual Json::Value toJson() override;

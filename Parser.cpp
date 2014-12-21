@@ -17,8 +17,6 @@
 
 #include <json/json.h>
 
-#include <memory>
-
 namespace WotReplayParser {
 
 void Parser::parse(std::istream& is) {
@@ -42,10 +40,10 @@ void Parser::parse(std::istream& is) {
         matchData.parse(dataBlocks[1].getData());
     }
     static const uint8_t key[16] = { // Blowfish key
-        0xDE, 0x72, 0xBE, 0xA0,
-        0xDE, 0x04, 0xBE, 0xB1,
-        0xDE, 0xFE, 0xBE, 0xEF,
-        0xDE, 0xAD, 0xBE, 0xEF
+            0xDE, 0x72, 0xBE, 0xA0,
+            0xDE, 0x04, 0xBE, 0xB1,
+            0xDE, 0xFE, 0xBE, 0xEF,
+            0xDE, 0xAD, 0xBE, 0xEF
     };
 
     std::vector<uint8_t> replayData(dataBlocks.back().getData().begin(), dataBlocks.back().getData().end()); // Compressed and encrypted event stream
@@ -55,9 +53,9 @@ void Parser::parse(std::istream& is) {
     decryptor.SetKey(key, 16);
 
     const size_t blockSize = 8;
-    uint8_t previousBlock[blockSize] = { 0 };
-    uint8_t decryptedBlock[blockSize] = { 0 };
-    uint8_t encryptedBlock[blockSize] = { 0 };
+    uint8_t previousBlock[blockSize] = {0};
+    uint8_t decryptedBlock[blockSize] = {0};
+    uint8_t encryptedBlock[blockSize] = {0};
 
     for (size_t i = 0; i < replayData.size(); i += blockSize) {
         std::copy(&replayData[i], (&replayData[i]) + blockSize, encryptedBlock);
@@ -70,8 +68,8 @@ void Parser::parse(std::istream& is) {
 
     // Decompress replay data
     z_stream stream = {
-        reinterpret_cast<uint8_t*>(&(replayData[0])),
-        static_cast<uInt>(replayData.size())
+            reinterpret_cast<uint8_t*>(&(replayData[0])),
+            static_cast<uInt>(replayData.size())
     };
     int ret = inflateInit(&stream);
     if (ret != Z_OK) {
@@ -87,11 +85,11 @@ void Parser::parse(std::istream& is) {
         ret = inflate(&stream, Z_NO_FLUSH);
         assert(ret != Z_STREAM_ERROR);
         switch (ret) {
-        case Z_NEED_DICT:
-            ret = Z_DATA_ERROR;
-        case Z_DATA_ERROR:
-        case Z_MEM_ERROR:
-            (void) inflateEnd(&stream);
+            case Z_NEED_DICT:
+                ret = Z_DATA_ERROR;
+            case Z_DATA_ERROR:
+            case Z_MEM_ERROR:
+                (void) inflateEnd(&stream);
         }
         int have = chunk - stream.avail_out;
         eventStream.resize(eventStream.size() + have);
@@ -114,20 +112,20 @@ void Parser::parse(std::istream& is) {
 #endif
 
     {// test code
-    Json::Value packetArray(Json::arrayValue);
-    auto it = eventStream.begin();
-    while (it != eventStream.end()) {
-        Packet packet(it);
-        it += packet.size();
-        packetArray.append(packet.toJson());
-    }
+        Json::Value packetArray(Json::arrayValue);
+        auto it = eventStream.begin();
+        while (it != eventStream.end()) {
+            Packet packet(it);
+            it += packet.size();
+            packetArray.append(packet.toJson());
+        }
 
-    Json::StyledWriter writer;
-    std::string json = writer.write(packetArray);
-    std::ofstream eventStreamJson("event_stream.json", std::ios::binary);
-    eventStreamJson.write(json.c_str(), json.size());
-    eventStreamJson.flush();
-    eventStreamJson.close();
+        Json::StyledWriter writer;
+        std::string json = writer.write(packetArray);
+        std::ofstream eventStreamJson("event_stream.json", std::ios::binary);
+        eventStreamJson.write(json.c_str(), json.size());
+        eventStreamJson.flush();
+        eventStreamJson.close();
     }
 }
 
@@ -161,9 +159,9 @@ std::vector<DataBlock> Parser::getDataBlocks(std::vector<uint8_t> buffer) {
 
     const uint32_t blockCount = getDataBlockCount(buffer);
     std::cout << "data block count: " << blockCount << std::endl;
-    
+
     std::vector<DataBlock> dataBlocks;
-    
+
     uint32_t offset = 8; // Skip magic number and block count
     for (uint32_t i = 0; i < blockCount; i++) {
         const uint32_t blockSize = *reinterpret_cast<const uint32_t*>(&buffer[offset]);

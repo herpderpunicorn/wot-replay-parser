@@ -44,7 +44,7 @@ int Version::build() {
 
 Version Version::getVersionFromString(const std::string& version) {
     std::smatch sm;
-    bool res = std::regex_match(version, sm, std::regex { R"(.*?(\d+)(?:\.|,\s)(\d+)(?:\.|,\s)(\d+)(?:\s#|,\s)(\d+).*?)" });
+    bool res = std::regex_match(version, sm, std::regex {R"(.*?(\d+)(?:\.|,\s)(\d+)(?:\.|,\s)(\d+)(?:\s#|,\s)(\d+).*?)"});
     if (!res || sm.size() != 5) {
         throw new std::invalid_argument("Unable to get version from string");
     }

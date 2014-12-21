@@ -8,42 +8,54 @@ namespace WotReplayParser {
 class Version {
 public:
     Version() = default;
+
     Version(int major, int minor, int maintenance, int build);
+
     ~Version() = default;
 
-    bool operator <(const Version& rhs) {
+    bool operator<(const Version& rhs) {
         return mMajor < rhs.mMajor || mMinor < rhs.mMinor || mMaintenance < rhs.mMaintenance;
     }
-    friend bool operator <(const Version& lhs, const Version& rhs) {
+
+    friend bool operator<(const Version& lhs, const Version& rhs) {
         return lhs.mMajor < rhs.mMajor || lhs.mMinor < rhs.mMinor || lhs.mMaintenance < rhs.mMaintenance;
     }
-    bool operator >(const Version& rhs) {
+
+    bool operator>(const Version& rhs) {
         return mMajor > rhs.mMajor || mMinor > rhs.mMinor || mMaintenance > rhs.mMaintenance;
     }
-    friend bool operator >(const Version& lhs, const Version& rhs) {
+
+    friend bool operator>(const Version& lhs, const Version& rhs) {
         return lhs.mMajor > rhs.mMajor || lhs.mMinor > rhs.mMinor || lhs.mMaintenance > rhs.mMaintenance;
     }
-    bool operator ==(const Version& rhs) {
+
+    bool operator==(const Version& rhs) {
         return mMajor == rhs.mMajor && mMinor == rhs.mMinor && mMaintenance == rhs.mMaintenance;
     }
-    friend bool operator ==(const Version& lhs, const Version& rhs) {
+
+    friend bool operator==(const Version& lhs, const Version& rhs) {
         return lhs.mMajor == rhs.mMajor && lhs.mMinor == rhs.mMinor && lhs.mMaintenance == rhs.mMaintenance;
     }
 
     void setVersion(const std::string& version);
+
     void setVersion(int major, int minor, int maintenance, int build);
 
     int major();
+
     int minor();
+
     int maintenance();
+
     int build();
 
     /**
-     * Get version from a string in one of the following formats:
-     *   0, 9, 1, 0
-     *   0.9.1 #719
-     */
+    * Get version from a string in one of the following formats:
+    *   0, 9, 1, 0
+    *   0.9.1 #719
+    */
     static Version getVersionFromString(const std::string& version);
+
 private:
     int mMajor;
     int mMinor;
