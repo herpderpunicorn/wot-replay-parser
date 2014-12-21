@@ -2,7 +2,7 @@
 
 #include <json/json.h>
 
-#include "common.hpp"
+#include "Common.hpp"
 
 #include <cryptopp/include/base64.h>
 
