@@ -1,7 +1,7 @@
 #include "Packet.hpp"
 #include "Packets.hpp"
 
-#include <json\json.h>
+#include <json/json.h>
 
 namespace WotReplayParser {
 

@@ -1,6 +1,6 @@
 // Parser.cpp
 
-#include "parser.hpp"
+#include "Parser.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -11,11 +11,11 @@
 #include "Packet.hpp"
 
 // For decrypt of event stream
-#include "blowfish.h"
+#include <cryptopp/include/blowfish.h>
 // For event stream inflation
 #include <zlib.h>
 
-#include "json\json.h"
+#include <json/json.h>
 
 #include <memory>
 
@@ -124,7 +124,7 @@ void Parser::parse(std::istream& is) {
 
     Json::StyledWriter writer;
     std::string json = writer.write(packetArray);
-    std::ofstream eventStreamJson("event_stream.json", std::ios::beg | std::ios::binary);
+    std::ofstream eventStreamJson("event_stream.json", std::ios::binary);
     eventStreamJson.write(json.c_str(), json.size());
     eventStreamJson.flush();
     eventStreamJson.close();

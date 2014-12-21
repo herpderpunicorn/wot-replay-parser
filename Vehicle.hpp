@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdint>
 
-#include "json\json-forwards.h"
+#include "json/json-forwards.h"
 
 namespace WotReplayParser {
 

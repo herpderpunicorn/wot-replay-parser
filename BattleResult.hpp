@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-#include "json\json-forwards.h"
+#include "json/json-forwards.h"
 #include "Personal.hpp"
 
 namespace WotReplayParser {

@@ -1,6 +1,6 @@
 #include "Personal.hpp"
 
-#include "json\json.h"
+#include <json/json.h>
 
 namespace WotReplayParser {
 

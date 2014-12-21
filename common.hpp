@@ -3,7 +3,7 @@
 namespace WotReplayParser {
 
 template <typename T>
-__forceinline T swapEndian(T u) {
+inline T swapEndian(T u) {
     union {
         T u;
         unsigned char u8[sizeof(T)];

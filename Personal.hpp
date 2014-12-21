@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include "json\json-forwards.h"
+#include "json/json-forwards.h"
 
 namespace WotReplayParser {
 

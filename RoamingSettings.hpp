@@ -2,8 +2,9 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 
-#include "json\json-forwards.h"
+#include <json/json-forwards.h>
 
 namespace WotReplayParser {
 
