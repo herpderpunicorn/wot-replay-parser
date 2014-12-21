@@ -11,11 +11,11 @@ namespace Payload {
 
 BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning) {
     id = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
-    beginning += sizeof(id) + 3; // 6 bytes are unkown
+    beginning += sizeof(id) + 3; // 6 bytes are unknown
     playerNameLength = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
     beginning += sizeof(playerNameLength);
     playerName = std::string(beginning, beginning + playerNameLength);
-    beginning += playerNameLength + 11; // 11 bytes are unkown
+    beginning += playerNameLength + 11; // 11 bytes are unknown
     pickleSize = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
     beginning += sizeof(pickleSize);
     pickle = std::vector<uint8_t>(beginning, beginning + pickleSize);
