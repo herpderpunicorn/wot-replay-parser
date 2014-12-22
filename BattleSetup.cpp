@@ -4,7 +4,7 @@
 
 #include "Common.hpp"
 
-#include <cryptopp/include/base64.h>
+#include <cryptopp/base64.h>
 
 namespace WotReplayParser {
 namespace Payload {

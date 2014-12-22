@@ -11,7 +11,7 @@
 #include "Packet.hpp"
 
 // For decrypt of event stream
-#include <cryptopp/include/blowfish.h>
+#include <cryptopp/blowfish.h>
 // For event stream inflation
 #include <zlib.h>
 
