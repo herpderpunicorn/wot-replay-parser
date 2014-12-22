@@ -12,10 +12,7 @@ set(INCLUDE_FILES BattleResult.hpp BattleSetup.hpp Common.hpp DataBlock.hpp Game
 add_library(wot-replay-parser STATIC ${SOURCE_FILES})
 target_link_libraries(wot-replay-parser cryptopp)
 
-# Tests
-include(test/GTest.cmake)
-set(TEST_FILES test/Version.cc test/BattleResult.cc test/BattleSetup.cc)
-cxx_test(unitTests "${TEST_FILES}" gtest_main wot-replay-parser cryptopp)
+add_subdirectory(./test/)
 
 install(TARGETS wot-replay-parser DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include)
