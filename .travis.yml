@@ -10,12 +10,12 @@ before_install:
 
 install:
   # CMake
-  - sudo apt-get install -qq cmake
+  - sudo apt-get install -qq -y cmake
   # g++-4.9
-  - if [ "$CXX" == "g++" ]; then sudo apt-get install g++-4.9 -qq -y; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq -y g++-4.9; fi
+  - if [ "$CXX" == "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   # clang-3.5
-  - if [ "$CXX" == "clang++" ]; then sudo apt-get install clang-3.5 -qq -y; fi
+  - if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq -y clang-3.5; fi
   - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.5"; fi
 
 script:
