@@ -40,3 +40,5 @@
 ## Directory-based project format:
 .idea/
 
+### Build ###
+build/
