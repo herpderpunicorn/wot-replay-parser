@@ -4,7 +4,7 @@ project(cryptopp)
 set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-option(CRYPTOPP_BUILD_TESTS "Build cryptopp tests" ON)
+option(CRYPTOPP_BUILD_TESTS "Build cryptopp tests" OFF)
 option(CRYPTOPP_DISABLE_ASM "Disable ASM" ON)
 option(CRYPTOPP_DISABLE_SSSE3 "Disable SSSE3" ON)
 option(CRYPTOPP_DISABLE_AESNI "Disable AES-NI" ON)
