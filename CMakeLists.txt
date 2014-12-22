@@ -9,5 +9,10 @@ set(SOURCE_FILES BattleResult.cpp BattleSetup.cpp DataBlock.cpp GameState.cpp Ga
 set(INCLUDE_FILES BattleResult.hpp BattleSetup.hpp Common.hpp DataBlock.hpp GameState.hpp GameVersion.hpp MatchData.hpp MatchStart.hpp Packet.hpp Packets.hpp Parser.hpp Payload.hpp Personal.hpp RoamingSettings.hpp Vehicle.hpp Version.hpp)
 add_library(wot-replay-parser STATIC ${SOURCE_FILES})
 
+# Tests
+include(test/GTest.cmake)
+set(TEST_FILES test/Version.cc)
+cxx_test(unitTests ${TEST_FILES} gtest_main wot-replay-parser)
+
 install(TARGETS wot-replay-parser DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include)
