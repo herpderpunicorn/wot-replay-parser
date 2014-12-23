@@ -15,7 +15,7 @@ target_link_libraries(wot-replay-parser cryptopp)
 # Tests
 include(test/GTest.cmake)
 set(TEST_FILES test/Version.cc test/BattleResult.cc test/BattleSetup.cc)
-cxx_test(unitTests "${TEST_FILES}" gtest_main wot-replay-parser cryptopp)
+cxx_test(unitTests "${TEST_FILES}" "${CMAKE_CURRENT_SOURCE_DIR}/test/" gtest_main wot-replay-parser cryptopp)
 
 install(TARGETS wot-replay-parser DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include)

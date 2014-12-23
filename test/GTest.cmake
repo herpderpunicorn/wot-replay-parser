@@ -30,12 +30,11 @@ enable_testing()
 
 find_package(Threads)
 
-function(cxx_test name sources)
+function(cxx_test name sources working_dir)
     add_executable(${name} ${sources})
     target_link_libraries(${name} ${ARGN} gtest ${CMAKE_THREAD_LIBS_INIT})
     set_property(TARGET ${name} APPEND PROPERTY INCLUDE_DIRECTORIES ${GTEST_INCLUDE_DIRS})
     add_dependencies(${name} gmock_ext)
-    # Working directory: where the dlls are installed.
-    add_test(NAME ${name} COMMAND ${name} "--gtest_break_on_failure")
+    add_test(NAME ${name} WORKING_DIRECTORY ${working_dir} COMMAND ${name} --gtest_break_on_failure)
 endfunction()
 
