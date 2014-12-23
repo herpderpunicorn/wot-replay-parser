@@ -13,7 +13,7 @@
 // For decrypt of event stream
 #include <cryptopp/blowfish.h>
 // For event stream inflation
-#include <zlib.h>
+#include <zlib/zlib.h>
 
 #include <json/json.h>
 
@@ -111,7 +111,7 @@ void Parser::parse(std::istream& is) {
     }
 #endif
 
-    {// test code
+    if (false) {// test code
         Json::Value packetArray(Json::arrayValue);
         auto it = eventStream.begin();
         while (it != eventStream.end()) {
