@@ -18,6 +18,7 @@ public:
         GameStateUpdate = 0x08,
         VehiclePositionUpdate = 0x0A,
         GameVersion = 0x14,
+        ChatMessage = 0x1F,
         MinimapClick = 0x21,
         EOS = 0xFFFFFFFF
     };

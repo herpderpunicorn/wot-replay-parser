@@ -22,10 +22,12 @@ Packet::Packet(std::vector<uint8_t>::iterator beginning) {
                 break;
             case VehiclePositionUpdate:
                 break;
-            case GameVersion: {
+            case GameVersion:
                 payload = std::make_unique<Payload::GameVersion>(beginning, beginning + payloadSize);
                 break;
-            };
+            case ChatMessage:
+                payload = std::make_unique<Payload::ChatMessage>(beginning, beginning + payloadSize);
+                break;
             case MinimapClick:
                 break;
             case EOS:
