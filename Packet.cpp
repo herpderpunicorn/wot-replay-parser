@@ -16,13 +16,20 @@ Packet::Packet(std::vector<uint8_t>::iterator beginning) {
     if (payloadSize > 0) {
         switch (type) {
             case BattleSetup:
-                payload = std::make_unique<Payload::BattleSetup>(beginning);
+                payload = std::make_unique<Payload::BattleSetup>(beginning, beginning + payloadSize);
                 break;
             case GameStateUpdate:
+                break;
             case VehiclePositionUpdate:
-            case GameVersion:
+                break;
+            case GameVersion: {
+                payload = std::make_unique<Payload::GameVersion>(beginning, beginning + payloadSize);
+                break;
+            };
             case MinimapClick:
+                break;
             case EOS:
+                break;
             default:
                 break;
         }
