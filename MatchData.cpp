@@ -14,7 +14,7 @@ void MatchData::parse(std::string json) {
     Json::Value root;
     bool parsed = reader.parse(json, root, false);
     if (!parsed) {
-        throw new std::invalid_argument("Unable to parse json");
+        throw std::invalid_argument("Unable to parse json");
     }
     if (root.isArray() && root.size() == 3) {
         battleResult.parse(root[0]);
@@ -38,7 +38,7 @@ void MatchData::parse(std::string json) {
             }
         }
     } else {
-        throw new std::invalid_argument("Unable to parse match data, root was invalid");
+        throw std::invalid_argument("Unable to parse match data, root was invalid");
     }
 }
 

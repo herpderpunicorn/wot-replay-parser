@@ -27,14 +27,14 @@ void Parser::parse(std::istream& is) {
     std::vector<uint8_t> buffer = std::vector<uint8_t>(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
     const uint32_t magicNumber = (buffer[0] << 0) | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
     if (magicNumber != 0x11343212) {
-        throw new std::runtime_error("Unexpected magic number in header");
+        throw std::runtime_error("Unexpected magic number in header");
     }
 
     // Vector of data ranges
     std::vector<DataBlock> dataBlocks(getDataBlocks(buffer));
 
     if (dataBlocks.size() < 2) {
-        throw new std::runtime_error("Unexpected number of blocks");
+        throw std::runtime_error("Unexpected number of blocks");
     }
     MatchStart matchStart;
     matchStart.parse(dataBlocks[0].getData());
@@ -146,7 +146,7 @@ std::vector<std::string> Parser::extractJson(std::istream& is) {
 
     int numberOfBlocks = dataBlocks.size();
     if (numberOfBlocks < 2) {
-        throw new std::runtime_error("Unexpected number of blocks");
+        throw std::runtime_error("Unexpected number of blocks");
     }
     std::vector<std::string> json;
     // Don't export the last block, last block is raw replay data
@@ -159,14 +159,14 @@ std::vector<std::string> Parser::extractJson(std::istream& is) {
 
 bool Parser::isLegacy(const std::vector<uint8_t>& buffer) const {
     if (buffer.size() < 10) {
-        throw new std::invalid_argument("Buffer is to small to process");
+        throw std::invalid_argument("Buffer is to small to process");
     }
     return buffer[8] == 0x78 && buffer[9] == 0xDA;
 }
 
 std::vector<DataBlock> Parser::getDataBlocks(std::vector<uint8_t> buffer) {
     if (isLegacy(buffer)) {
-        throw new std::invalid_argument("No support for legacy replays");
+        throw std::invalid_argument("No support for legacy replays");
     }
 
     const uint32_t blockCount = getDataBlockCount(buffer);
