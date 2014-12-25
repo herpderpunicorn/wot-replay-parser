@@ -1,6 +1,4 @@
 #include <json/json.h>
-#include <iostream>
-#include <stdint-gcc.h>
 #include "VehiclePosition.hpp"
 
 
