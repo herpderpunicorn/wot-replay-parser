@@ -26,7 +26,7 @@ public:
 
     /**
     * Parses a stream.
-    * @param is The stream contaning the replay.
+    * @param is The stream containing the replay.
     */
     void parse(std::istream& is);
 
