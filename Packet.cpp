@@ -1,6 +1,7 @@
 #include "Packet.hpp"
 #include "Packets.hpp"
-
+#include <fstream>
+#include <iterator>
 #include <json/json.h>
 
 namespace WotReplayParser {
@@ -21,6 +22,7 @@ Packet::Packet(std::vector<uint8_t>::iterator beginning) {
             case GameStateUpdate:
                 break;
             case VehiclePositionUpdate:
+                payload = std::make_unique<Payload::VehiclePosition>(beginning, beginning + payloadSize);
                 break;
             case GameVersion:
                 payload = std::make_unique<Payload::GameVersion>(beginning, beginning + payloadSize);
@@ -34,7 +36,7 @@ Packet::Packet(std::vector<uint8_t>::iterator beginning) {
                 break;
             default:
                 break;
-        }
+        };
     }
 }
 
