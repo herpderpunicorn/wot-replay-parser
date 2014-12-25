@@ -4,16 +4,25 @@
 #include <cstdint>
 #include <vector>
 #include <utility>
+#include <functional>
 
 #include "DataBlock.hpp"
 
 namespace WotReplayParser {
+
+class Packet;
 
 class Parser {
 public:
     Parser() = default;
 
     ~Parser() = default;
+
+    /**
+     * Sets the packet callback which is called for every packet in event stream
+    * @param callback Function accepting a Packet
+     */
+    void setPacketCallback(const std::function<void(const Packet&)>& callback);
 
     /**
     * Parses a stream.
@@ -35,6 +44,7 @@ protected:
     uint32_t getDataBlockCount(std::vector<uint8_t> buffer);
 
 private:
+    std::function<void(const Packet&)> mPacketCallback;
 };
 
 }

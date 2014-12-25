@@ -19,6 +19,10 @@
 
 namespace WotReplayParser {
 
+void Parser::setPacketCallback(const std::function<void(const Packet &)> &callback) {
+    mPacketCallback = callback;
+};
+
 void Parser::parse(std::istream& is) {
     std::vector<uint8_t> buffer = std::vector<uint8_t>(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
     const uint32_t magicNumber = (buffer[0] << 0) | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
@@ -110,6 +114,14 @@ void Parser::parse(std::istream& is) {
         eventStreamOut.close();
     }
 #endif
+    if (mPacketCallback) {
+        auto it = eventStream.begin();
+        while (it != eventStream.end()) {
+            Packet packet(it);
+            it += packet.size();
+            mPacketCallback(packet);
+        }
+    }
 
     if (false) {// test code
         Json::Value packetArray(Json::arrayValue);
