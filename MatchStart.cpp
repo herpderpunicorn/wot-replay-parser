@@ -14,7 +14,7 @@ bool MatchStart::parse(std::string json) {
     Json::Value root;
     bool parsed = reader.parse(json, root, false);
     if (!parsed) {
-        throw new std::invalid_argument("Unable to parse json");
+        throw std::invalid_argument("Unable to parse json");
     }
     romingSettings.parse(root.get("roamingSettings", Json::nullValue));
     clientVersionFromXml = root.get("clientVersionFromXml", Json::nullValue).asString();
