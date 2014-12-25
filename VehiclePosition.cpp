@@ -30,7 +30,17 @@ namespace WotReplayParser {
         }
 
         Json::Value VehiclePosition::toJson() {
-            return Json::Value(Json::nullValue);
+            Json::Value root(Json::objectValue)
+            root["playerId"] = Json::Value(playerId);
+            root["position"] = Json::Value(Json::objectValue);
+            root["position"]["x"] = Json::Value(std::get<0>(position));
+            root["position"]["y"] = Json::Value(std::get<1>(position));
+            root["position"]["z"] = Json::Value(std::get<2>(position));
+            root["hullOrientation"] = Json::Value(Json::objectValue);
+            root["hullOrientation"]["x"] = Json::Value(std::get<0>(hullOrientation));
+            root["hullOrientation"]["y"] = Json::Value(std::get<1>(hullOrientation));
+            root["hullOrientation"]["z"] = Json::Value(std::get<2>(hullOrientation));
+            return root;
         }
 
         uint32_t VehiclePosition::getPlayerId() const {
