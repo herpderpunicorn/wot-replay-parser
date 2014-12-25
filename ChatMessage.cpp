@@ -19,5 +19,9 @@ Json::Value ChatMessage::toJson() {
     return root;
 }
 
+std::string ChatMessage::getMessage() const {
+    return message;
+}
+
 }
 }

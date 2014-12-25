@@ -16,8 +16,9 @@ public:
 
     ~ChatMessage() = default;
 
-
     virtual Json::Value toJson() override;
+
+    std::string getMessage() const;
 
 protected:
     /**
