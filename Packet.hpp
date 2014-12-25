@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <memory>
+#include <string>
 
 #include <json/json-forwards.h>
 
@@ -41,11 +42,22 @@ public:
     */
     Json::Value toJson();
 
+    template<class T>
+    const T& getPayload() const;
+
 private:
     uint32_t payloadSize;
     PacketType type;
     float clock;
     std::unique_ptr<Payload::Payload> payload;
 };
+
+template<class T>
+const T& Packet::getPayload() const {
+    if (typeid(T) != typeid(*payload)) {
+        throw std::runtime_error("Payload is not of the requested type");
+    }
+    return (T&)*payload;
+}
 
 }

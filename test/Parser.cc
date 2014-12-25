@@ -3,6 +3,7 @@
 #include <fstream>
 #include "../Parser.hpp"
 #include "../Packet.hpp"
+#include "../BattleSetup.hpp"
 
 using namespace WotReplayParser;
 
@@ -43,3 +44,28 @@ TEST_F(ParserTests, eosPacketIsReceivedInCallback) {
     ASSERT_TRUE(eosReceived);
 }
 
+TEST_F(ParserTests, getPayload) {
+    bool called = false;
+    parser.setPacketCallback([&called](const Packet& packet) {
+        if (packet.getType() == Packet::BattleSetup) {
+            ASSERT_NO_THROW(packet.getPayload<Payload::BattleSetup>());
+            called = true;
+        }
+    });
+    std::ifstream is("data/test_replay.wotreplay", std::ios::binary);
+    parser.parse(is);
+    ASSERT_TRUE(called) << "Did not find a BattleSetup package";
+}
+
+TEST_F(ParserTests, getPayloadThrow) {
+    bool thrown = false;
+    parser.setPacketCallback([&thrown](const Packet& packet) {
+        if (packet.getType() != Packet::BattleSetup) {
+            ASSERT_ANY_THROW(packet.getPayload<Payload::BattleSetup>());
+            thrown = true;
+        }
+    });
+    std::ifstream is("data/test_replay.wotreplay", std::ios::binary);
+    parser.parse(is);
+    ASSERT_TRUE(thrown) << "Found only BattleSetup packages";
+}
