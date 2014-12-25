@@ -26,7 +26,6 @@ VehiclePosition::VehiclePosition(std::vector<uint8_t>::iterator beginning, std::
     const float hz  = *reinterpret_cast<float*>(&beginning[0]);
     beginning += sizeof(float);
     hullOrientation = std::make_tuple(hx, hy, hz);
-
 }
 
 Json::Value VehiclePosition::toJson() {
