@@ -106,14 +106,6 @@ void Parser::parse(std::istream& is) {
         throw std::runtime_error("Inflator did not reach stream end");
     }
 
-#ifdef _DEBUG
-    {
-        std::ofstream eventStreamOut("event_stream.dat", std::ios::beg | std::ios::binary);
-        eventStreamOut.write(reinterpret_cast<const char*>(&eventStream[0]), eventStream.size());
-        eventStreamOut.flush();
-        eventStreamOut.close();
-    }
-#endif
     if (mPacketCallback) {
         auto it = eventStream.begin();
         while (it != eventStream.end()) {
@@ -121,23 +113,6 @@ void Parser::parse(std::istream& is) {
             it += packet.size();
             mPacketCallback(packet);
         }
-    }
-
-    if (false) {// test code
-        Json::Value packetArray(Json::arrayValue);
-        auto it = eventStream.begin();
-        while (it != eventStream.end()) {
-            Packet packet(it);
-            it += packet.size();
-            packetArray.append(packet.toJson());
-        }
-
-        Json::StyledWriter writer;
-        std::string json = writer.write(packetArray);
-        std::ofstream eventStreamJson("event_stream.json", std::ios::binary);
-        eventStreamJson.write(json.c_str(), json.size());
-        eventStreamJson.flush();
-        eventStreamJson.close();
     }
 }
 
