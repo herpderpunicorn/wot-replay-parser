@@ -10,10 +10,10 @@ namespace Payload {
 
 /**
 * uint   id         (0, 4)
-* ...    unkown     (4, 6)
+* ...    unknown    (4, 6)
 * byte   nameLen    (10, 1)
 * string playerName (14, nameLen)
-* ...    unkown     (14+nameLen, 11)
+* ...    unknown    (14+nameLen, 11)
 * uint   pickleSize (25+nameLen, 4)
 * ...    pickle     (29+nameLen, pickleSize)
 */
@@ -27,8 +27,9 @@ public:
 
     /**
     * @param beginning The start of the payload
+    * @param end The end of the payload
     */
-    BattleSetup(std::vector<uint8_t>::iterator beginning);
+    BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<uint8_t>::iterator end);
 
     ~BattleSetup() = default;
 
@@ -37,6 +38,14 @@ public:
     * @return The payload as a Json::Value
     */
     virtual Json::Value toJson() override;
+
+protected:
+    /**
+    * @return The minimum size a Packet of this type can be
+    */
+    inline static size_t minimumSize() {
+        return sizeof(id) + sizeof(playerNameLength) + sizeof(pickleSize) + 14;
+    }
 
 private:
     /**

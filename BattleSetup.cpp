@@ -9,9 +9,12 @@
 namespace WotReplayParser {
 namespace Payload {
 
-BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning) {
+BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<uint8_t>::iterator end) {
+    if (std::distance(beginning, end) < minimumSize()) {
+        throw std::runtime_error("Data size smaller than minimum size for BattleSetup");
+    }
     id = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
-    beginning += sizeof(id) + 3; // 6 bytes are unknown
+    beginning += sizeof(id) + 3; // 3 bytes are unknown
     playerNameLength = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
     beginning += sizeof(playerNameLength);
     playerName = std::string(beginning, beginning + playerNameLength);
