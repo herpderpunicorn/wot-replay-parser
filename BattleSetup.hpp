@@ -34,38 +34,37 @@ protected:
     * @return The minimum size a Packet of this type can be
     */
     inline static size_t minimumSize() {
-        return sizeof(id) + sizeof(playerNameLength) + sizeof(pickleSize) + 14;
+        return sizeof(id) +
+               sizeof(uint8_t) + // player name length
+               sizeof(arenaUniqueID) +
+               sizeof(arenaTypeID) +
+               sizeof(bonusType) +
+               sizeof(guiType) +
+               sizeof(uint8_t); // pickle size, can be a uint32 too
     }
 
 private:
     /**
     * Id of the battle
     */
-    uint32_t id;
-    /**
-    * Length of the player name string
-    */
-    uint8_t playerNameLength;
+    uint32_t             id;
     /**
     * The player name
     */
-    std::string playerName;
-
-    uint64_t arenaUniqueID;
-    uint64_t arenaCreateTime;
-
-    uint32_t arenaTypeID;
-    uint32_t gameplayID;
-    uint32_t mapId;
-
-    uint8_t bonusType;
-
-    uint8_t guiType;
-
+    std::string          playerName;
     /**
-    * Size of the pickle
+    * The unique arena id
     */
-    uint16_t pickleSize;
+    uint64_t             arenaUniqueID;
+    /**
+    * Unix timestamp of when the arena was created.
+    */
+    uint64_t             arenaCreateTime;
+    uint32_t             arenaTypeID;
+    uint32_t             gameplayID;
+    uint32_t             mapId;
+    uint8_t              bonusType;
+    uint8_t              guiType;
     /**
     * The raw pickle
     */

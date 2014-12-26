@@ -2,8 +2,6 @@
 
 #include <json/json.h>
 
-#include "Common.hpp"
-
 #include <cryptopp/base64.h>
 #include <fstream>
 #include <iostream>
@@ -15,20 +13,20 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
     if (std::distance(beginning, end) < minimumSize()) {
         throw std::runtime_error("Data size smaller than minimum size for BattleSetup");
     }
-    id = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
+    id = *reinterpret_cast<uint32_t*>(&beginning[0]);
     beginning += sizeof(id) + 6;
 
-    playerNameLength = beginning[0];
-    beginning += sizeof(playerNameLength);
+    uint8_t playerNameLength = beginning[0];
+    beginning += sizeof(uint8_t);
 
     playerName = std::string(beginning, beginning + playerNameLength);
     beginning += playerNameLength;
 
-    arenaUniqueID   = swapEndian(*reinterpret_cast<uint64_t*>(&beginning[0]));
+    arenaUniqueID   = *reinterpret_cast<uint64_t*>(&beginning[0]);
     beginning += sizeof(arenaUniqueID);
-    arenaCreateTime = arenaUniqueID & 4294967295L;
+    arenaCreateTime = arenaUniqueID & 0xffffffff;
 
-    arenaTypeID = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
+    arenaTypeID = *reinterpret_cast<uint32_t*>(&beginning[0]);
     beginning += sizeof(arenaTypeID);
     gameplayID = arenaTypeID >> 16;
     mapId = arenaTypeID & 0x7fff;
@@ -38,6 +36,7 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
     guiType = beginning[0];
     beginning += sizeof(guiType);
 
+    int pickleSize;
     if (beginning[0] == 0xff) {
         pickleSize = *reinterpret_cast<uint16_t*>(&beginning[1]);
         beginning += sizeof(uint32_t);
