@@ -1,4 +1,5 @@
 #include "BattleSetup.hpp"
+#include "UnPickle.hpp"
 
 #include <json/json.h>
 
@@ -51,18 +52,18 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
 
 Json::Value BattleSetup::toJson() {
     Json::Value root(Json::objectValue);
-    root["id"]              = Json::Value(id);
-    root["player_name"]     = Json::Value(playerName);
-    root["arenaUniqueID"]   = Json::Value((Json::UInt64) arenaUniqueID);
-    root["arenaCreateTime"] = Json::Value((Json::UInt64) arenaCreateTime);
-    root["arenaTypeID"]     = Json::Value(arenaTypeID);
-    root["gameplayID"]      = Json::Value(gameplayID);
-    root["mapId"]           = Json::Value(mapId);
-    root["bonusType"]       = Json::Value(bonusType);
-    root["guiType"]         = Json::Value(guiType);
-    std::string encoded;
-    CryptoPP::StringSource(std::string(pickle.begin(), pickle.end()), true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(encoded)));
-    root["pickle"] = Json::Value(encoded);
+    root["id"] = Json::Value(id);
+    root["player_name"] = Json::Value(playerName);
+    root["arenaUniqueID"] = Json::Value((Json::UInt64)arenaUniqueID);
+    root["arenaCreateTime"] = Json::Value((Json::UInt64)arenaCreateTime);
+    root["arenaTypeID"] = Json::Value(arenaTypeID);
+    root["gameplayID"] = Json::Value(gameplayID);
+    root["mapId"] = Json::Value(mapId);
+    root["bonusType"] = Json::Value(bonusType);
+    root["guiType"] = Json::Value(guiType);
+
+    UnPickle unpickle(pickle.begin(), pickle.end());
+    root["pickle"] = unpickle.toJson();
     return root;
 }
 
