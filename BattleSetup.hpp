@@ -35,6 +35,7 @@ protected:
     */
     inline static size_t minimumSize() {
         return sizeof(id) +
+               6 + // Unknown data
                sizeof(uint8_t) + // player name length
                sizeof(arenaUniqueID) +
                sizeof(arenaTypeID) +
