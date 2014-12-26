@@ -52,8 +52,8 @@ Json::Value BattleSetup::toJson() {
     Json::Value root(Json::objectValue);
     root["id"] = Json::Value(id);
     root["player_name"] = Json::Value(playerName);
-    root["arenaUniqueID"] = Json::Value(arenaUniqueID);
-    root["arenaCreateTime"] = Json::Value(arenaCreateTime);
+    root["arenaUniqueID"] = Json::Value((Json::UInt64)arenaUniqueID);
+    root["arenaCreateTime"] = Json::Value((Json::UInt64)arenaCreateTime);
     root["arenaTypeID"] = Json::Value(arenaTypeID);
     root["gameplayID"] = Json::Value(gameplayID);
     root["mapId"] = Json::Value(mapId);
