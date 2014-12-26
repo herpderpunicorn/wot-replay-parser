@@ -93,7 +93,6 @@ UnPickle::UnPickle(std::vector<uint8_t>::const_iterator begin, std::vector<uint8
                 break;
             case BININT1:
                 valueStack.emplace_back(Json::Value(static_cast<int8_t>(*begin++)));
-                ++begin;
                 break;
             case SETITEM: {
                     const size_t top = valueStack.size() - 1;
