@@ -20,3 +20,14 @@ TEST(UnPickle, toJsonReturnsObject) {
     auto json = UnPickle(data.begin(), data.end()).toJson();
     ASSERT_TRUE(json.isObject());
 }
+
+TEST(UnPickle, toJsonReturnsJsonObjectWithCorrectContents) {
+    std::ifstream file("data/battle_setup_pickle.dat", std::ios::binary);
+    ASSERT_TRUE(file.is_open()) << "Unable to open 'data/battle_setup_pickle.dat'";
+    std::vector<uint8_t> data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+    auto json = UnPickle(data.begin(), data.end()).toJson();
+    Json::Value expected;
+    Json::Reader().parse("{\"battleLevel\": 11}", expected);
+    ASSERT_EQ(expected, json);
+
+}
