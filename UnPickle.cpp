@@ -78,7 +78,7 @@ UnPickle::UnPickle(std::vector<uint8_t>::const_iterator begin, std::vector<uint8
                     ++begin;
                 }
                 break;
-            case BINPUT:
+            case BINPUT: // no memo so far
                 ++begin;
                 break;
             case SHORT_BINSTRING: {
@@ -92,16 +92,16 @@ UnPickle::UnPickle(std::vector<uint8_t>::const_iterator begin, std::vector<uint8
                 valueStack.emplace_back(Json::Value(Json::objectValue));
                 break;
             case BININT1:
-                valueStack.emplace_back(Json::Value(*begin));
+                valueStack.emplace_back(Json::Value(static_cast<int8_t>(*begin++)));
                 ++begin;
                 break;
             case SETITEM: {
-                    const size_t top = valueStack.size()-1;
+                    const size_t top = valueStack.size() - 1;
                     Json::Value& object = valueStack.at(top - 2);
                     Json::Value key = valueStack.at(top - 1);
                     Json::Value value = valueStack.at(top);
                     object[key.asString()] = value;
-                    valueStack.resize(valueStack.size()-top);
+                    valueStack.resize(valueStack.size() - top);
                 }
                 break;
             case STOP:
@@ -114,7 +114,8 @@ UnPickle::UnPickle(std::vector<uint8_t>::const_iterator begin, std::vector<uint8
 }
 
 Json::Value UnPickle::toJson() const {
-    if (!valueStack.empty()) return valueStack.at(0);
+    if (!valueStack.empty())
+        return valueStack.at(0);
     return Json::Value(Json::nullValue);
 }
 }

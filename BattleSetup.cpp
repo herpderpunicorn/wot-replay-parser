@@ -3,7 +3,6 @@
 
 #include <json/json.h>
 
-#include <cryptopp/base64.h>
 #include <fstream>
 #include <iostream>
 
