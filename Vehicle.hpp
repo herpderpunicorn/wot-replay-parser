@@ -17,12 +17,11 @@ public:
 
 private:
     std::string vehicleType;
-    bool isAlive;
+    bool        isAlive;
     std::string name;
     std::string clanAbbrev;
-    uint32_t team;
-    // Events, json object, unkown structure
-    bool isTeamKiller;
+    uint32_t    team;
+    bool        isTeamKiller;
 };
 
 }

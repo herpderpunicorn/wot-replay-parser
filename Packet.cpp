@@ -9,8 +9,10 @@ namespace WotReplayParser {
 Packet::Packet(std::vector<uint8_t>::iterator beginning) {
     payloadSize = *reinterpret_cast<uint32_t*>(&beginning[0]);
     beginning += sizeof(payloadSize);
+
     type = *reinterpret_cast<PacketType*>(&beginning[0]);
     beginning += sizeof(type);
+
     clock = *reinterpret_cast<float*>(&beginning[0]);
     beginning += sizeof(clock);
 
@@ -50,7 +52,7 @@ const Packet::PacketType Packet::getType() const {
 
 Json::Value Packet::toJson() {
     Json::Value root(Json::objectValue);
-    root["type"] = Json::Value(type);
+    root["type"]  = Json::Value(type);
     root["clock"] = Json::Value(clock);
     if (payload) {
         root["payload"] = payload->toJson();

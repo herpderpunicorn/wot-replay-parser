@@ -10,6 +10,7 @@ ChatMessage::ChatMessage(std::vector<uint8_t>::iterator beginning, std::vector<u
     }
     uint32_t length = *reinterpret_cast<uint32_t*>(&beginning[0]);
     beginning += sizeof(length);
+
     message = std::string(beginning, beginning + length);
 }
 

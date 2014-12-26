@@ -9,7 +9,7 @@
 
 namespace WotReplayParser {
 
-/** \breif The battle result
+/**
 * The battle result parsed from the battle result json.
 */
 class BattleResult {
@@ -21,11 +21,10 @@ public:
     void parse(Json::Value root);
 
 private:
-    Personal personal;
+    Personal                   personal;
     std::map<std::string, int> players;
     std::map<std::string, int> vehicles;
-    // common
-    uint64_t arenaUniqueID;
+    uint64_t                   arenaUniqueID;
 };
 
 }

@@ -20,23 +20,21 @@ public:
 
     bool parse(std::string json);
 
-    int getVersion();
-
 private:
-    RoamingSettings romingSettings;
-    std::string clientVersionFromXml;
-    std::string clientVersionFromExe;
-    std::string mapDisplayName;
-    std::string gameplayID;
-    std::string regionCode;
-    uint32_t playerID;
-    std::string serverName;
+    RoamingSettings                romingSettings;
+    std::string                    clientVersionFromXml;
+    std::string                    clientVersionFromExe;
+    std::string                    mapDisplayName;
+    std::string                    gameplayID;
+    std::string                    regionCode;
+    uint32_t                       playerID;
+    std::string                    serverName;
     std::map<std::string, Vehicle> vehicles;
-    std::string dateTime;
-    std::string mapName;
-    std::string playerName;
-    uint32_t battleType;
-    std::string playerVehicle;
+    std::string                    dateTime;
+    std::string                    mapName;
+    std::string                    playerName;
+    uint32_t                       battleType;
+    std::string                    playerVehicle;
 };
 
 }

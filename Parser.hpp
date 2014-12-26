@@ -19,9 +19,9 @@ public:
     ~Parser() = default;
 
     /**
-     * Sets the packet callback which is called for every packet in event stream
+    * Sets the packet callback which is called for every packet in event stream
     * @param callback Function accepting a Packet
-     */
+    */
     void setPacketCallback(const std::function<void(const Packet&)>& callback);
 
     /**

@@ -26,7 +26,7 @@ protected:
     }
 
 private:
-    uint32_t length;
+    uint32_t    length;
     std::string version;
 };
 
