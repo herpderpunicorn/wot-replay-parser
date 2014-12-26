@@ -17,7 +17,7 @@ public:
     struct ServerInfo {
         uint32_t    serverRegion;
         uint32_t    unkownVal1;
-        float       unkownVal2;
+        uint64_t    unkownVal2;
         std::string regionCode;
     };
 
