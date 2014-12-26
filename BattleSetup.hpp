@@ -8,16 +8,6 @@
 namespace WotReplayParser {
 namespace Payload {
 
-/**
-* uint   id         (0, 4)
-* ...    unknown    (4, 6)
-* byte   nameLen    (10, 1)
-* string playerName (14, nameLen)
-* ...    unknown    (14+nameLen, 11)
-* uint   pickleSize (25+nameLen, 4)
-* ...    pickle     (29+nameLen, pickleSize)
-*/
-
 /** \brief Battle setup payload
 *
 */
@@ -55,15 +45,27 @@ private:
     /**
     * Length of the player name string
     */
-    uint32_t playerNameLength;
+    uint8_t playerNameLength;
     /**
     * The player name
     */
     std::string playerName;
+
+    uint64_t arenaUniqueID;
+    uint64_t arenaCreateTime;
+
+    uint32_t arenaTypeID;
+    uint32_t gameplayID;
+    uint32_t mapId;
+
+    uint8_t bonusType;
+
+    uint8_t guiType;
+
     /**
     * Size of the pickle
     */
-    uint32_t pickleSize;
+    uint16_t pickleSize;
     /**
     * The raw pickle
     */

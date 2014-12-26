@@ -16,19 +16,19 @@ public:
 
     ~ChatMessage() = default;
 
-
     virtual Json::Value toJson() override;
 
-protected:
+    std::string getMessage() const;
+
+private:
     /**
     * @return The minimum size a Packet of this type can be
     */
     inline static size_t minimumSize() {
-        return sizeof(length);
+        // Min size is a message length of zero.
+        return sizeof(uint32_t);
     }
 
-private:
-    uint32_t length;
     std::string message;
 };
 
