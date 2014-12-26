@@ -17,6 +17,11 @@ TEST_F(ParserTests, ParseV094) {
     parser.parse(is);
 }
 
+TEST_F(ParserTests, ParseV094ClanWars) {
+    std::ifstream is("data/v0.9.4_cw_replay.wotreplay", std::ios::binary);
+    parser.parse(is);
+}
+
 TEST_F(ParserTests, Parse) {
     std::ifstream is("data/test_replay.wotreplay", std::ios::binary);
     parser.parse(is);

@@ -5,6 +5,8 @@
 #include "Common.hpp"
 
 #include <cryptopp/base64.h>
+#include <fstream>
+#include <iostream>
 
 namespace WotReplayParser {
 namespace Payload {
@@ -14,13 +16,35 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
         throw std::runtime_error("Data size smaller than minimum size for BattleSetup");
     }
     id = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
-    beginning += sizeof(id) + 3; // 3 bytes are unknown
-    playerNameLength = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
+    beginning += sizeof(id) + 6;
+
+    playerNameLength = beginning[0];
     beginning += sizeof(playerNameLength);
+
     playerName = std::string(beginning, beginning + playerNameLength);
-    beginning += playerNameLength + 11; // 11 bytes are unknown
-    pickleSize = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
-    beginning += sizeof(pickleSize);
+    beginning += playerNameLength;
+
+    arenaUniqueID   = swapEndian(*reinterpret_cast<uint64_t*>(&beginning[0]));
+    beginning += sizeof(arenaUniqueID);
+    arenaCreateTime = arenaUniqueID & 4294967295L;
+
+    arenaTypeID = swapEndian(*reinterpret_cast<uint32_t*>(&beginning[0]));
+    beginning += sizeof(arenaTypeID);
+    gameplayID = arenaTypeID >> 16;
+    mapId = arenaTypeID & 0x7fff;
+
+    bonusType = beginning[0];
+    beginning += sizeof(bonusType);
+    guiType = beginning[0];
+    beginning += sizeof(guiType);
+
+    if (beginning[0] == 0xff) {
+        pickleSize = *reinterpret_cast<uint16_t*>(&beginning[1]);
+        beginning += sizeof(uint32_t);
+    } else {
+        pickleSize = beginning[0];
+        beginning += sizeof(uint8_t);
+    }
     pickle = std::vector<uint8_t>(beginning, beginning + pickleSize);
 }
 
@@ -28,6 +52,13 @@ Json::Value BattleSetup::toJson() {
     Json::Value root(Json::objectValue);
     root["id"] = Json::Value(id);
     root["player_name"] = Json::Value(playerName);
+    root["arenaUniqueID"] = Json::Value(arenaUniqueID);
+    root["arenaCreateTime"] = Json::Value(arenaCreateTime);
+    root["arenaTypeID"] = Json::Value(arenaTypeID);
+    root["gameplayID"] = Json::Value(gameplayID);
+    root["mapId"] = Json::Value(mapId);
+    root["bonusType"] = Json::Value(bonusType);
+    root["guiType"] = Json::Value(guiType);
     std::string encoded;
     CryptoPP::StringSource(std::string(pickle.begin(), pickle.end()), true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(encoded)));
     root["pickle"] = Json::Value(encoded);
