@@ -1,8 +1,4 @@
 #include "UnPickle.hpp"
-#include <iostream>
-#include <msxml.h>
-#include "json/json.h"
-#include "JsonCpp/json/json.h"
 
 /** this is from python cPickle.c */
 
@@ -100,13 +96,12 @@ UnPickle::UnPickle(std::vector<uint8_t>::const_iterator begin, std::vector<uint8
                 ++begin;
                 break;
             case SETITEM: {
-                    Json::Value& object = valueStack.at(valueStack.size()-3);
-                    for(int i = valueStack.size()-1; i < valueStack.size();++i) {
-                        Json::Value key = valueStack.at(i-1);
-                        Json::Value value = valueStack.at(i);
-                        object[key.asString()] = value;
-                    }
-                    valueStack.resize(valueStack.size()-3);
+                    const size_t top = valueStack.size()-1;
+                    Json::Value& object = valueStack.at(top - 2);
+                    Json::Value key = valueStack.at(top - 1);
+                    Json::Value value = valueStack.at(top);
+                    object[key.asString()] = value;
+                    valueStack.resize(valueStack.size()-top);
                 }
                 break;
             case STOP:
