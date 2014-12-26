@@ -5,7 +5,6 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <functional>
 #include "MatchStart.hpp"
 #include "MatchData.hpp"
 #include "Packet.hpp"
@@ -19,13 +18,13 @@
 
 namespace WotReplayParser {
 
-void Parser::setPacketCallback(const std::function<void(const Packet &)> &callback) {
+void Parser::setPacketCallback(const std::function<void(const Packet&)>& callback) {
     mPacketCallback = callback;
 };
 
 void Parser::parse(std::istream& is) {
-    std::vector<uint8_t> buffer = std::vector<uint8_t>(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
-    const uint32_t magicNumber = (buffer[0] << 0) | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
+    std::vector<uint8_t> buffer      = std::vector<uint8_t>(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
+    const uint32_t       magicNumber = (buffer[0] << 0) | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
     if (magicNumber != 0x11343212) {
         throw std::runtime_error("Unexpected magic number in header");
     }
@@ -50,16 +49,17 @@ void Parser::parse(std::istream& is) {
             0xDE, 0xAD, 0xBE, 0xEF
     };
 
-    std::vector<uint8_t> replayData(dataBlocks.back().getData().begin(), dataBlocks.back().getData().end()); // Compressed and encrypted event stream
+    std::vector<uint8_t> replayData(dataBlocks.back().getData().begin(),
+                                    dataBlocks.back().getData().end()); // Compressed and encrypted event stream
 
     // Decrypt replay data
     CryptoPP::BlowfishDecryption decryptor;
     decryptor.SetKey(key, 16);
 
-    const size_t blockSize = 8;
-    uint8_t previousBlock[blockSize] = {0};
-    uint8_t decryptedBlock[blockSize] = {0};
-    uint8_t encryptedBlock[blockSize] = {0};
+    const size_t blockSize                 = 8;
+    uint8_t      previousBlock[blockSize]  = {0};
+    uint8_t      decryptedBlock[blockSize] = {0};
+    uint8_t      encryptedBlock[blockSize] = {0};
 
     for (size_t i = 0; i < replayData.size(); i += blockSize) {
         std::copy(&replayData[i], (&replayData[i]) + blockSize, encryptedBlock);
@@ -75,17 +75,18 @@ void Parser::parse(std::istream& is) {
             reinterpret_cast<uint8_t*>(&(replayData[0])),
             static_cast<uInt>(replayData.size())
     };
+
     int ret = inflateInit(&stream);
     if (ret != Z_OK) {
         throw std::runtime_error("Unable to init zlib inflate");
     }
 
-    const int chunk = 1024 * 1024;
+    const int                  chunk = 1024 * 1024;
     std::unique_ptr<uint8_t[]> out(new uint8_t[chunk]);
 
     do {
         stream.avail_out = chunk;
-        stream.next_out = out.get();
+        stream.next_out  = out.get();
         ret = inflate(&stream, Z_NO_FLUSH);
         assert(ret != Z_STREAM_ERROR);
         switch (ret) {
@@ -94,6 +95,9 @@ void Parser::parse(std::istream& is) {
             case Z_DATA_ERROR:
             case Z_MEM_ERROR:
                 (void) inflateEnd(&stream);
+                break;
+            default:
+                break;
         }
         int have = chunk - stream.avail_out;
         eventStream.resize(eventStream.size() + have);
@@ -119,7 +123,7 @@ void Parser::parse(std::istream& is) {
 std::vector<std::string> Parser::extractJson(std::istream& is) {
     std::vector<DataBlock> dataBlocks(getDataBlocks(std::vector<uint8_t>(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>())));
 
-    int numberOfBlocks = dataBlocks.size();
+    int numberOfBlocks         = dataBlocks.size();
     if (numberOfBlocks < 2) {
         throw std::runtime_error("Unexpected number of blocks");
     }

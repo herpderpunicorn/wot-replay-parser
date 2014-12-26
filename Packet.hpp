@@ -15,13 +15,13 @@ namespace WotReplayParser {
 class Packet {
 public:
     enum PacketType : uint32_t {
-        BattleSetup = 0x00,
-        GameStateUpdate = 0x08,
+        BattleSetup           = 0x00,
+        GameStateUpdate       = 0x08,
         VehiclePositionUpdate = 0x0A,
-        GameVersion = 0x14,
-        ChatMessage = 0x1F,
-        MinimapClick = 0x21,
-        EOS = 0xFFFFFFFF
+        GameVersion           = 0x14,
+        ChatMessage           = 0x1F,
+        MinimapClick          = 0x21,
+        EOS                   = 0xFFFFFFFF
     };
 
     Packet() = delete;
@@ -46,9 +46,9 @@ public:
     const T& getPayload() const;
 
 private:
-    uint32_t payloadSize;
-    PacketType type;
-    float clock;
+    uint32_t                          payloadSize;
+    PacketType                        type;
+    float                             clock;
     std::unique_ptr<Payload::Payload> payload;
 };
 
@@ -57,7 +57,7 @@ const T& Packet::getPayload() const {
     if (typeid(T) != typeid(*payload)) {
         throw std::runtime_error("Payload is not of the requested type");
     }
-    return (T&)*payload;
+    return (T&) *payload;
 }
 
 }

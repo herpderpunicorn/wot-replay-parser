@@ -24,8 +24,8 @@ public:
     void parse(std::string json);
 
 private:
-    BattleResult battleResult;
-    std::map<std::string, Vehicle> vehicles;
+    BattleResult                    battleResult;
+    std::map<std::string, Vehicle>  vehicles;
     std::map<std::string, FragInfo> frags;
 };
 

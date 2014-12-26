@@ -5,25 +5,25 @@
 namespace WotReplayParser {
 
 Version::Version(int major, int minor, int maintenance, int build) {
-    mMajor = major;
-    mMinor = minor;
+    mMajor       = major;
+    mMinor       = minor;
     mMaintenance = maintenance;
-    mBuild = build;
+    mBuild       = build;
 }
 
 void Version::setVersion(const std::string& version) {
     Version v = getVersionFromString(version);
-    mMajor = v.mMajor;
-    mMinor = v.mMinor;
+    mMajor       = v.mMajor;
+    mMinor       = v.mMinor;
     mMaintenance = v.mMaintenance;
-    mBuild = v.mBuild;
+    mBuild       = v.mBuild;
 }
 
 void Version::setVersion(int major, int minor, int maintenance, int build) {
-    mMajor = major;
-    mMinor = minor;
+    mMajor       = major;
+    mMinor       = minor;
     mMaintenance = maintenance;
-    mBuild = build;
+    mBuild       = build;
 }
 
 int Version::major() {
@@ -44,7 +44,7 @@ int Version::build() {
 
 Version Version::getVersionFromString(const std::string& version) {
     std::smatch sm;
-    bool res = std::regex_match(version, sm, std::regex {R"(.*?(\d+)(?:\.|,\s)(\d+)(?:\.|,\s)(\d+)(?:\s#|,\s)(\d+).*?)"});
+    bool        res = std::regex_match(version, sm, std::regex {R"(.*?(\d+)(?:\.|,\s)(\d+)(?:\.|,\s)(\d+)(?:\s#|,\s)(\d+).*?)"});
     if (!res || sm.size() != 5) {
         throw std::invalid_argument("Unable to get version from string");
     }
