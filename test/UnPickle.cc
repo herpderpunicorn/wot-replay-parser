@@ -27,7 +27,7 @@ TEST(UnPickle, toJsonReturnsJsonObjectWithCorrectContents) {
     std::vector<uint8_t> data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
     auto json = UnPickle(data.begin(), data.end()).toJson();
     Json::Value expected;
-    Json::Reader().parse("{\"battleLevel\": 11}", expected);
+    ASSERT_TRUE(Json::Reader().parse(R"({"battleLevel": 11})", expected, true));
     ASSERT_EQ(expected, json);
 
 }
