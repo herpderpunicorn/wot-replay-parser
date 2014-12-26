@@ -16,8 +16,8 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
     id = *reinterpret_cast<uint32_t*>(&beginning[0]);
     beginning += sizeof(id) + 6;
 
-    playerNameLength = beginning[0];
-    beginning += sizeof(playerNameLength);
+    uint8_t playerNameLength = beginning[0];
+    beginning += sizeof(uint8_t);
 
     playerName = std::string(beginning, beginning + playerNameLength);
     beginning += playerNameLength;

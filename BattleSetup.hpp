@@ -35,7 +35,7 @@ protected:
     */
     inline static size_t minimumSize() {
         return sizeof(id) +
-               sizeof(playerNameLength) +
+               sizeof(uint8_t) + // player name length
                sizeof(arenaUniqueID) +
                sizeof(arenaTypeID) +
                sizeof(bonusType) +
@@ -48,10 +48,6 @@ private:
     * Id of the battle
     */
     uint32_t             id;
-    /**
-    * Length of the player name string
-    */
-    uint8_t              playerNameLength;
     /**
     * The player name
     */
