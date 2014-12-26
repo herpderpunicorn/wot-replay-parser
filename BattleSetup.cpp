@@ -36,6 +36,7 @@ BattleSetup::BattleSetup(std::vector<uint8_t>::iterator beginning, std::vector<u
     guiType = beginning[0];
     beginning += sizeof(guiType);
 
+    int pickleSize;
     if (beginning[0] == 0xff) {
         pickleSize = *reinterpret_cast<uint16_t*>(&beginning[1]);
         beginning += sizeof(uint32_t);
