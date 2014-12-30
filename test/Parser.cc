@@ -82,3 +82,14 @@ TEST_F(ParserTests, extractChatMessages) {
     // We do make the assumption that there always are some chatting in the replay, this might not be true
     ASSERT_GT(messages.size(), 0);
 }
+
+TEST_F(ParserTests, extractJson) {
+    std::ifstream is("data/test_replay.wotreplay", std::ios::binary);
+    ASSERT_TRUE(is.is_open()) << "Unable to open test_replay.wotreplay";
+    std::vector<std::string> jsons = parser.extractJson(is);
+    ASSERT_GT(jsons.size(), 0);
+    for (auto json : jsons) {
+        Json::Value root;
+        ASSERT_TRUE(Json::Reader().parse(json, root, true)) << "Unable to parse json from replay";
+    }
+}
