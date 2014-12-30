@@ -173,4 +173,16 @@ uint32_t Parser::getDataBlockCount(std::vector<uint8_t> buffer) {
     return (buffer[4] << 0) | (buffer[5] << 8) | (buffer[6] << 16) | (buffer[7] << 24);
 }
 
+std::vector<std::string> Parser::extractChatMessages(std::istream& replay) {
+    std::vector<std::string> messages;
+    Parser                   parser;
+    parser.setPacketCallback([&messages](const Packet& packet) {
+        if (packet.getType() == Packet::ChatMessage) {
+            messages.emplace_back(packet.getPayload<Payload::ChatMessage>().getMessage());
+        }
+    });
+    parser.parse(replay);
+    return messages;
+}
+
 }

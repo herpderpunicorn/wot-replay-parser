@@ -7,6 +7,8 @@
 #include <functional>
 
 #include "DataBlock.hpp"
+#include "Packet.hpp"
+#include "ChatMessage.hpp"
 
 namespace WotReplayParser {
 
@@ -31,6 +33,8 @@ public:
     void parse(std::istream& is);
 
     std::vector<std::string> extractJson(std::istream& is);
+
+    static std::vector<std::string> extractChatMessages(std::istream& replay);
 
 protected:
     bool isLegacy(const std::vector<uint8_t>& buffer) const;

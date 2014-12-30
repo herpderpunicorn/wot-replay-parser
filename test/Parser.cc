@@ -74,3 +74,11 @@ TEST_F(ParserTests, getPayloadThrow) {
     parser.parse(is);
     ASSERT_TRUE(thrown) << "Found only BattleSetup packages";
 }
+
+TEST_F(ParserTests, extractChatMessages) {
+    std::ifstream is("data/test_replay.wotreplay", std::ios::binary);
+    ASSERT_TRUE(is.is_open()) << "Unable to open test_replay.wotreplay";
+    std::vector<std::string> messages = Parser::extractChatMessages(is);
+    // We do make the assumption that there always are some chatting in the replay, this might not be true
+    ASSERT_GT(messages.size(), 0);
+}
